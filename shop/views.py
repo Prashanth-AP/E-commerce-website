@@ -1,5 +1,7 @@
 from django.shortcuts import render
-from .models import Product
+from .models import Product,Contact
+import logging
+logger = logging.getLogger(__name__)
 
 # Create your views here.
 from django.http import HttpResponse
@@ -24,7 +26,15 @@ def about(request):
     return render(request,'shop/about.html')
 
 def contact(request):
-    return render(request,'shop/contact.html')
+    if request.method=="POST":
+        print(request)
+        name=request.POST.get('name', '')
+        email=request.POST.get('email', '')
+        phone=request.POST.get('phone', '')
+        desc=request.POST.get('desc', '')
+        contact = Contact(name=name, email=email, phone=phone, desc=desc)
+        contact.save()
+    return render(request, "shop/contact.html")
 
 def tracker(request):
     return HttpResponse("We are at tracker")
@@ -38,6 +48,6 @@ def productView(request, myid):
     return render(request, "shop/productView.html",{'product':product[0]})
 
 def checkout(request):
-    return HttpResponse("We are at checkout")
+    return render(request, "shop/checkout.html")
 
 
