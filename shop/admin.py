@@ -7,3 +7,6 @@ admin.site.register(Product)
 
 from .models import Contact
 admin.site.register(Contact)
+
+from .models import Orders
+admin.site.register(Orders)
